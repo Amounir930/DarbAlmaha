@@ -1,0 +1,41 @@
+# robots.txt for DarbAlmaha - https://darbalmaha.com/
+# Last Updated: 2026-04-05
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://darbalmaha.com/sitemap.xml
+
+# Allow all major search engine bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /img/
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: facebot
+Allow: /
+
+User-agent: ia_archiver
+Allow: /
+
+# Disallow common paths (if they exist in future)
+# Disallow: /admin/
+# Disallow: /private/
+# Disallow: /temp/

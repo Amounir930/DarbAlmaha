@@ -136,12 +136,12 @@
 
 ---
 
-### 7. إصلاح خطأ Review Schema في Google Search Console
-- ✅ الخطأ: `Missing field 'itemReviewed'` في الـ Review Schema
-- ✅ الحل: إضافة `<meta itemprop="itemReviewed" content="...">` لكل مراجعة
-- ✅ تم الإصلاح في الصفحة العربية (3 مراجعات)
-- ✅ تم الإصلاح في الصفحة الإنجليزية (3 مراجعات)
-- ✅ النتيجة: كل المراجعات هتكون Valid لـ Rich Results
+### 8. ربط Google Analytics 4 + تنظيف التتبع
+- ✅ إضافة GA4 Tag: `G-Z1V73KZXZL`
+- ✅ الإبقاء على Google Ads: `AW-18068835941`
+- ✅ حذف Google Tag Manager Placeholder: `GTM-XXXXXXX`
+- ✅ تم التطبيق على الصفحتين (عربي + إنجليزي)
+- 📌 ملاحظة: Facebook, TikTok, Snapchat Pixels لسه Placeholder - محتاجين استبدال بمعرفات حقيقية
 
 ### البند | الوصف | التكلفة التقديرية
 ------|-------|------------------

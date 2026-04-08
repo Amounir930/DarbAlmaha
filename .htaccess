@@ -7,11 +7,14 @@
     RewriteEngine On
     RewriteBase /
 
-    # Force HTTPS (uncomment when SSL is enabled)
-    # RewriteCond %{HTTPS} off
-    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    # ============================================
+    # FORCE HTTPS (SSL is active via Let's Encrypt)
+    # ============================================
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-    # Force www (uncomment if needed)
+    # Force non-www to www (choose ONE version for consistency)
+    # Uncomment if you want www version:
     # RewriteCond %{HTTP_HOST} !^www\. [NC]
     # RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
 

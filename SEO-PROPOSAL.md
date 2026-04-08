@@ -143,6 +143,19 @@
 - ✅ تم التطبيق على الصفحتين (عربي + إنجليزي)
 - 📌 ملاحظة: Facebook, TikTok, Snapchat Pixels لسه Placeholder - محتاجين استبدال بمعرفات حقيقية
 
+### 7. إصلاح خطأ Review Schema في Google Search Console (تحديث)
+- ✅ الخطأ الأول: `Missing field 'itemReviewed'` → تم الحل
+- ✅ الخطأ الثاني: `Invalid object type for field 'itemReviewed'` → تم الحل باستخدام LocalBusiness object
+- ✅ الكود الجديد:
+  ```html
+  <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/LocalBusiness">
+      <meta itemprop="name" content="درب المها للضيافة وتنظيفات">
+      <meta itemprop="url" content="https://darbalmaha.com/">
+  </div>
+  ```
+- ✅ تم التطبيق على 6 مراجعات (3 عربي + 3 إنجليزي)
+- 📌 **مهم:** بعد رفع الملفات، اعمل **LIVE TEST** في GSC
+
 ### البند | الوصف | التكلفة التقديرية
 ------|-------|------------------
 إصلاحات فنية | HTTPS, Schema, Tracking, GSC | 500 - 1,000 ريال

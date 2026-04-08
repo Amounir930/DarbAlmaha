@@ -53,8 +53,9 @@
     <link rel="alternate" hreflang="en" href="https://darbalmaha.com/en/">
     <link rel="alternate" hreflang="x-default" href="https://darbalmaha.com/">
 
-    <!-- Facebook Pixel -->
+    <!-- DISABLED: Facebook Pixel (Waiting for Real ID) -->
     <script>
+        /*
         !function (f, b, e, v, n, t, s) {
             if (f.fbq) return; n = f.fbq = function () {
                 n.callMethod ?
@@ -68,11 +69,13 @@
             'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', 'XXXXXXXXXXXX');
         fbq('track', 'PageView');
+        */
     </script>
     <!-- End Facebook Pixel -->
 
-    <!-- TikTok Pixel -->
+    <!-- DISABLED: TikTok Pixel (Waiting for Real ID) -->
     <script>
+        /*
         !function (w, d, t) {
             w.TiktokAnalyticsObject = t; var ttq = w[t] = w[t] || []; ttq.methods = ["page", "track", "identify", "instances", "debug", "on", "off", "once", "ready", "alias", "group", "enableCookie", "disableCookie"];
             ttq.setAndDefer = function (t, e) { t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } };
@@ -82,16 +85,19 @@
             ttq.load('XXXXXXXX');
             ttq.page();
         }(window, document, 'ttq');
+        */
     </script>
     <!-- End TikTok Pixel -->
 
-    <!-- Snapchat Pixel -->
+    <!-- DISABLED: Snapchat Pixel (Waiting for Real ID) -->
     <script>
-        (function (e, t, n) { if (e.snaptr) return; var a = e.snaptr = function () { a.handleRequest ? a.handleRequest.apply(a, arguments) : a.queue.push(arguments) }; a.queue = []; var s = 'script'; r = t.createElement(s); r.async = !0; r.src = n; var u = t.getElementsByTagName(s)[0]; u.parentNode.insertBefore(r, u); })(window, document, 'https://sc-static.net/scevent.min.js');
-        snaptr('init', 'XXXXXXXX', {
-            'user_email': '_INSERT_USER_EMAIL_'
-        });
-        snaptr('track', 'PAGE_VIEW');
+        /*
+            (function (e, t, n) { if (e.snaptr) return; var a = e.snaptr = function () { a.handleRequest ? a.handleRequest.apply(a, arguments) : a.queue.push(arguments) }; a.queue = []; var s = 'script'; r = t.createElement(s); r.async = !0; r.src = n; var u = t.getElementsByTagName(s)[0]; u.parentNode.insertBefore(r, u); })(window, document, 'https://sc-static.net/scevent.min.js');
+            snaptr('init', 'XXXXXXXX', {
+                'user_email': '_INSERT_USER_EMAIL_'
+            });
+            snaptr('track', 'PAGE_VIEW');
+        */
     </script>
     <!-- End Snapchat Pixel -->
 

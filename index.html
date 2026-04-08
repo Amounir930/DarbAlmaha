@@ -118,13 +118,18 @@
     <meta name="twitter:image" content="https://darbalmaha.com/img/banner.webp">
     <meta name="twitter:image:alt" content="درب المها - خدمات التنظيف في قطر">
 
-    <!-- Performance Optimizations -->
-    <link rel="preload" href="img/banner.webp" as="image" fetchpriority="high">
+    <!-- Performance Optimizations - LCP Focus -->
+    <!-- Preload LCP Image (Banner) -->
+    <link rel="preload" href="img/banner.webp" as="image" fetchpriority="high"
+        imagesrcset="img/banner.webp 1200w, img/banner.webp 800w" imagesizes="100vw">
     <link rel="preload" href="img/logo0.png" as="image" fetchpriority="high">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Preload Critical CSS -->
+    <link rel="preload" href="css/landing.min.css" as="style">
+    <!-- Font Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap"
+        as="style">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <!-- CSS -->

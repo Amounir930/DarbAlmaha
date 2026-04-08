@@ -10,6 +10,7 @@
     const CONFIG = {
         gtmId: 'GTM-XXXXXXX',        // Google Tag Manager ID
         ga4Id: 'G-XXXXXXXXXX',       // GA4 Measurement ID
+        googleAdsId: 'AW-18068835941', // Google Ads ID
         fbPixelId: 'XXXXXXXXXXXX',   // Facebook Pixel ID
         tiktokPixelId: 'XXXXXXXX',   // TikTok Pixel ID
         snapchatPixelId: 'XXXXXXXX'  // Snapchat Pixel ID

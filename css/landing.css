@@ -657,6 +657,32 @@ section[id] {
   gap: 10px;
 }
 
+.service-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  gap: 15px;
+}
+
+.service-actions .service-btn {
+  margin-top: 0;
+}
+
+.service-whatsapp-btn {
+  color: #25D366;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: var(--transition);
+}
+
+.service-whatsapp-btn:hover {
+  color: #20bd5a;
+  transform: translateY(-2px);
+}
+
 /* Why Choose Us */
 .why-us {
   background-color: var(--white);
@@ -674,15 +700,26 @@ section[id] {
 
 .why-us-img {
   flex: 1;
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.why-us-img img {
+.why-us-img-wrapper {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.why-us-img-wrapper img {
+  width: 100%;
+  height: auto;
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
+  display: block;
 }
 
-.why-us-img::before {
+.why-us-img-wrapper::before {
   content: '';
   position: absolute;
   top: -20px;
@@ -694,7 +731,7 @@ section[id] {
   z-index: -1;
 }
 
-html[dir="ltr"] .why-us-img::before {
+html[dir="ltr"] .why-us-img-wrapper::before {
   right: 20px;
   left: -20px;
 }

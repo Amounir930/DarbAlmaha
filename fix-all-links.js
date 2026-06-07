@@ -26,7 +26,7 @@ function fixHtmlFile(filePath, isEn) {
   content = content.replace(/href="#services"/g, `href="${langPrefix}services/"`);
   content = content.replace(/href="#why-us"/g, `href="${langPrefix}#why-us"`);
   content = content.replace(/href="#faq"/g, `href="${langPrefix}#faq"`);
-  content = content.replace(/href="#contact"/g, `href="${langPrefix}#contact"`);
+  content = content.replace(/href="#contact"/g, `href="${langPrefix}booking/"`);
 
   // Also replace any old relative or wrong links in header:
   content = content.replace(/href="\.\.\/\.\.\/ar\/"/g, 'href="/ar/"');
@@ -74,6 +74,14 @@ function fixHtmlFile(filePath, isEn) {
     const regexEn = new RegExp(`href="[^"]*"(\\s+class="area-pill"\\s+data-en="${city.en}")`, 'g');
     content = content.replace(regexEn, `href="${langPrefix}${city.folder}/"$1`);
   });
+
+  // 6. Wrap why-us-img in why-us-img-wrapper if not already wrapped
+  if (content.includes('class="why-us-img"') && !content.includes('class="why-us-img-wrapper"')) {
+    content = content.replace(
+      /<div class="why-us-img">\s*([\s\S]*?)\s*<\/div>/g,
+      '<div class="why-us-img"><div class="why-us-img-wrapper">$1</div></div>'
+    );
+  }
 
   if (content !== original) {
     fs.writeFileSync(filePath, content, 'utf8');

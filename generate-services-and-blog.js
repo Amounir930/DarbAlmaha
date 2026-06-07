@@ -306,6 +306,12 @@ function buildPage(pageData, isEn) {
   bodyContent = cleanEmojis(bodyContent);
   bodyContent = forceWhatsApp(bodyContent);
 
+  // Wrap why-us-img in why-us-img-wrapper to ensure perfect orange border alignment
+  bodyContent = bodyContent.replace(
+    /<div class="why-us-img">\s*([\s\S]*?)\s*<\/div>/g,
+    '<div class="why-us-img"><div class="why-us-img-wrapper">$1</div></div>'
+  );
+
   // Replace standard list checkmarks in bodyContent with custom styling or modern SVG to avoid Dingbats block issues
   bodyContent = bodyContent.replace(/<div class="why-list-icon">✓<\/div>/g, `<div class="why-list-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-top:4px;"><polyline points="20 6 9 17 4 12"></polyline></svg></div>`);
   bodyContent = bodyContent.replace(/<li>✓<\/li>/g, `<li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-right:5px;"><polyline points="20 6 9 17 4 12"></polyline></svg></li>`);
@@ -404,7 +410,10 @@ const pagesData = [
                       <div class="service-content">
                           <h3>تنظيف الفلل والمنازل</h3>
                           <p>نوفر خدمة التنظيف الشامل والعميق للفلل والقصور والشقق بمواد مرخصة وآلات متطورة تزيل كافة الدهون والأوساخ والغبار.</p>
-                          <a href="house-cleaning-doha/" class="service-btn">تفاصيل الخدمة</a>
+                          <div class="service-actions">
+                              <a href="house-cleaning-doha/" class="service-btn">تفاصيل الخدمة</a>
+                              <a href="https://wa.me/97477175355?text=مرحباً،%20أرغب%20في%20طلب%20خدمة%20تنظيف%20الفلل%20والمنازل" target="_blank" rel="noopener noreferrer" class="service-whatsapp-btn">تواصل مباشر</a>
+                          </div>
                       </div>
                   </article>
                   <article class="service-card">
@@ -414,7 +423,10 @@ const pagesData = [
                       <div class="service-content">
                           <h3>عاملات بالساعة</h3>
                           <p>عاملات ماهرات ومدربات لمساعدتكم في أعمال المنزل اليومية والغسيل والترتيب بكفاءة وسرعة فائقة.</p>
-                          <a href="hourly-maids-qatar/" class="service-btn">تفاصيل الخدمة</a>
+                          <div class="service-actions">
+                              <a href="hourly-maids-qatar/" class="service-btn">تفاصيل الخدمة</a>
+                              <a href="https://wa.me/97477175355?text=مرحباً،%20أرغب%20في%20طلب%20خدمة%20عاملات%20بالساعة" target="_blank" rel="noopener noreferrer" class="service-whatsapp-btn">تواصل مباشر</a>
+                          </div>
                       </div>
                   </article>
                   <article class="service-card">
@@ -424,7 +436,10 @@ const pagesData = [
                       <div class="service-content">
                           <h3>غسيل الكنب والسجاد بالبخار</h3>
                           <p>تنظيف وغسيل الكنب والمجالس والديوانيات بأحدث آلات البخار لإزالة أصعب البقع والروائح وتعقيمها بالكامل.</p>
-                          <a href="sofa-carpet-cleaning/" class="service-btn">تفاصيل الخدمة</a>
+                          <div class="service-actions">
+                              <a href="sofa-carpet-cleaning/" class="service-btn">تفاصيل الخدمة</a>
+                              <a href="https://wa.me/97477175355?text=مرحباً،%20أرغب%20في%20طلب%20خدمة%20غسيل%20الكنب%20والسجاد" target="_blank" rel="noopener noreferrer" class="service-whatsapp-btn">تواصل مباشر</a>
+                          </div>
                       </div>
                   </article>
                   <article class="service-card">
@@ -434,7 +449,10 @@ const pagesData = [
                       <div class="service-content">
                           <h3>مكافحة ورش الحشرات</h3>
                           <p>رش مبيدات آمنة ومرخصة للتخلص النهائي من الصراصير والنمل وبق الفراش والقوارض مع ضمان حقيقي.</p>
-                          <a href="pest-control-qatar/" class="service-btn">تفاصيل الخدمة</a>
+                          <div class="service-actions">
+                              <a href="pest-control-qatar/" class="service-btn">تفاصيل الخدمة</a>
+                              <a href="https://wa.me/97477175355?text=مرحباً،%20أرغب%20في%20طلب%20خدمة%20مكافحة%20ورش%20الحشرات" target="_blank" rel="noopener noreferrer" class="service-whatsapp-btn">تواصل مباشر</a>
+                          </div>
                       </div>
                   </article>
                   <article class="service-card">
@@ -444,7 +462,10 @@ const pagesData = [
                       <div class="service-content">
                           <h3>تنظيف خزانات المياه</h3>
                           <p>غسيل وتعقيم خزانات المياه السفلية والعلوية لضمان وصول مياه نقية وصحية تماماً لعائلتكم.</p>
-                          <a href="water-tank-cleaning/" class="service-btn">تفاصيل الخدمة</a>
+                          <div class="service-actions">
+                              <a href="water-tank-cleaning/" class="service-btn">تفاصيل الخدمة</a>
+                              <a href="https://wa.me/97477175355?text=مرحباً،%20أرغب%20في%20طلب%20خدمة%20تنظيف%20خزانات%20المياه" target="_blank" rel="noopener noreferrer" class="service-whatsapp-btn">تواصل مباشر</a>
+                          </div>
                       </div>
                   </article>
                   <article class="service-card">
@@ -454,7 +475,10 @@ const pagesData = [
                       <div class="service-content">
                           <h3>التنظيف العميق للسيارات</h3>
                           <p>تنظيف وغسيل مقاعد وفرش السيارات وتلميع الطبلون والأبواب من الداخل والخارج لإزالة الأتربة والبقع المتراكمة.</p>
-                          <a href="car-deep-cleaning/" class="service-btn">تفاصيل الخدمة</a>
+                          <div class="service-actions">
+                              <a href="car-deep-cleaning/" class="service-btn">تفاصيل الخدمة</a>
+                              <a href="https://wa.me/97477175355?text=مرحباً،%20أرغب%20في%20طلب%20خدمة%20التنظيف%20العميق%20للسيارات" target="_blank" rel="noopener noreferrer" class="service-whatsapp-btn">تواصل مباشر</a>
+                          </div>
                       </div>
                   </article>
               </div>
@@ -486,7 +510,10 @@ const pagesData = [
                       <div class="service-content">
                           <h3>Villa & Home Cleaning</h3>
                           <p>Complete deep cleaning for villas, penthouses, and apartments using safe detergents and advanced tools.</p>
-                          <a href="house-cleaning-doha/" class="service-btn">Service Details</a>
+                          <div class="service-actions">
+                              <a href="house-cleaning-doha/" class="service-btn">Service Details</a>
+                              <a href="https://wa.me/97477175355?text=Hello,%20I%20would%20like%20to%20book%20Villa%20and%20Home%20Cleaning%20service" target="_blank" rel="noopener noreferrer" class="service-whatsapp-btn">WhatsApp Us</a>
+                          </div>
                       </div>
                   </article>
                   <article class="service-card">
@@ -496,7 +523,10 @@ const pagesData = [
                       <div class="service-content">
                           <h3>Hourly Maids</h3>
                           <p>Skilled hourly maids to assist you with daily home cleaning, organizing, and laundry tasks with efficiency.</p>
-                          <a href="hourly-maids-qatar/" class="service-btn">Service Details</a>
+                          <div class="service-actions">
+                              <a href="hourly-maids-qatar/" class="service-btn">Service Details</a>
+                              <a href="https://wa.me/97477175355?text=Hello,%20I%20would%20like%20to%20book%20Hourly%20Maids%20service" target="_blank" rel="noopener noreferrer" class="service-whatsapp-btn">WhatsApp Us</a>
+                          </div>
                       </div>
                   </article>
                   <article class="service-card">
@@ -506,7 +536,10 @@ const pagesData = [
                       <div class="service-content">
                           <h3>Sofa & Carpet Steam Cleaning</h3>
                           <p>Deep steam cleaning for sofas, majlis, and carpets to remove tough stains, dust mites, and odors.</p>
-                          <a href="sofa-carpet-cleaning/" class="service-btn">Service Details</a>
+                          <div class="service-actions">
+                              <a href="sofa-carpet-cleaning/" class="service-btn">Service Details</a>
+                              <a href="https://wa.me/97477175355?text=Hello,%20I%20would%20like%20to%20book%20Sofa%20and%20Carpet%20Steam%20Cleaning%20service" target="_blank" rel="noopener noreferrer" class="service-whatsapp-btn">WhatsApp Us</a>
+                          </div>
                       </div>
                   </article>
                   <article class="service-card">
@@ -516,7 +549,10 @@ const pagesData = [
                       <div class="service-content">
                           <h3>Pest Control & Spraying</h3>
                           <p>Safe and licensed insecticide spraying to eliminate cockroaches, ants, bed bugs, and rodents.</p>
-                          <a href="pest-control-qatar/" class="service-btn">Service Details</a>
+                          <div class="service-actions">
+                              <a href="pest-control-qatar/" class="service-btn">Service Details</a>
+                              <a href="https://wa.me/97477175355?text=Hello,%20I%20would%20like%20to%20book%20Pest%20Control%20and%20Spraying%20service" target="_blank" rel="noopener noreferrer" class="service-whatsapp-btn">WhatsApp Us</a>
+                          </div>
                       </div>
                   </article>
                   <article class="service-card">
@@ -526,7 +562,10 @@ const pagesData = [
                       <div class="service-content">
                           <h3>Water Tank Washing</h3>
                           <p>Washing and sanitizing water tanks with safe materials to ensure pure, contaminant-free water.</p>
-                          <a href="water-tank-cleaning/" class="service-btn">Service Details</a>
+                          <div class="service-actions">
+                              <a href="water-tank-cleaning/" class="service-btn">Service Details</a>
+                              <a href="https://wa.me/97477175355?text=Hello,%20I%20would%20like%20to%20book%20Water%20Tank%20Washing%20service" target="_blank" rel="noopener noreferrer" class="service-whatsapp-btn">WhatsApp Us</a>
+                          </div>
                       </div>
                   </article>
                   <article class="service-card">
@@ -536,7 +575,10 @@ const pagesData = [
                       <div class="service-content">
                           <h3>Car Deep Cleaning</h3>
                           <p>Detailed cleaning for car seats, carpets, dashboard, and doors to restore your vehicle interior cleanliness.</p>
-                          <a href="car-deep-cleaning/" class="service-btn">Service Details</a>
+                          <div class="service-actions">
+                              <a href="car-deep-cleaning/" class="service-btn">Service Details</a>
+                              <a href="https://wa.me/97477175355?text=Hello,%20I%20would%20like%20to%20book%20Car%20Deep%20Cleaning%20service" target="_blank" rel="noopener noreferrer" class="service-whatsapp-btn">WhatsApp Us</a>
+                          </div>
                       </div>
                   </article>
               </div>

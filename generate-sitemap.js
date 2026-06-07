@@ -46,13 +46,13 @@ let xml = `<?xml version="1.0" encoding="UTF-8"?>
 pages.forEach(p => {
   // Arabic URL
   xml += `  <url>
-    <loc>https://darbalmaha.com/${p.path}</loc>
+    <loc>https://darbalmaha.com/ar/${p.path}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${p.changefreq}</changefreq>
     <priority>${p.priority}</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://darbalmaha.com/${p.path}"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://darbalmaha.com/ar/${p.path}"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://darbalmaha.com/en/${p.path}"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://darbalmaha.com/${p.path}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://darbalmaha.com/ar/${p.path}"/>
   </url>
 `;
 
@@ -62,9 +62,9 @@ pages.forEach(p => {
     <lastmod>${lastmod}</lastmod>
     <changefreq>${p.changefreq}</changefreq>
     <priority>${p.priority === '1.0' ? '0.8' : p.priority}</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://darbalmaha.com/${p.path}"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://darbalmaha.com/ar/${p.path}"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://darbalmaha.com/en/${p.path}"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://darbalmaha.com/${p.path}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://darbalmaha.com/ar/${p.path}"/>
   </url>
 `;
 });

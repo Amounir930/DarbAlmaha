@@ -3,7 +3,7 @@ const path = require('path');
 
 // Base Paths
 const baseDir = __dirname;
-const arTemplatePath = path.join(baseDir, 'index.html');
+const arTemplatePath = path.join(baseDir, 'ar', 'index.html');
 const enTemplatePath = path.join(baseDir, 'en', 'index.html');
 
 if (!fs.existsSync(arTemplatePath) || !fs.existsSync(enTemplatePath)) {
@@ -126,9 +126,15 @@ function adjustPaths(html, depth, isEn) {
   adjusted = adjusted.replace(/src="..\/..\/js\//g, `src="${prefix}js/`);
 
   // Adjust policy links
-  adjusted = adjusted.replace(/href="privacy-policy\.html"/g, `href="${prefix}privacy-policy.html"`);
-  adjusted = adjusted.replace(/href="terms\.html"/g, `href="${prefix}terms.html"`);
-  adjusted = adjusted.replace(/href="refund-policy\.html"/g, `href="${prefix}refund-policy.html"`);
+  if (isEn) {
+    adjusted = adjusted.replace(/href="privacy-policy\.html"/g, `href="${prefix}en/privacy-policy.html"`);
+    adjusted = adjusted.replace(/href="terms\.html"/g, `href="${prefix}en/terms.html"`);
+    adjusted = adjusted.replace(/href="refund-policy\.html"/g, `href="${prefix}en/refund-policy.html"`);
+  } else {
+    adjusted = adjusted.replace(/href="privacy-policy\.html"/g, `href="${prefix}ar/privacy-policy.html"`);
+    adjusted = adjusted.replace(/href="terms\.html"/g, `href="${prefix}ar/terms.html"`);
+    adjusted = adjusted.replace(/href="refund-policy\.html"/g, `href="${prefix}ar/refund-policy.html"`);
+  }
 
   // Adjust main links in navigation (Services, Booking, Pricing, Blog)
   if (isEn) {
@@ -138,11 +144,11 @@ function adjustPaths(html, depth, isEn) {
     adjusted = adjusted.replace(/href="#faq"/g, `href="${prefix}en/#faq"`);
     adjusted = adjusted.replace(/href="#contact"/g, `href="${prefix}en/#contact"`);
   } else {
-    adjusted = adjusted.replace(/href="#home"/g, `href="${prefix}"`);
-    adjusted = adjusted.replace(/href="#services"/g, `href="${prefix}#services"`);
-    adjusted = adjusted.replace(/href="#why-us"/g, `href="${prefix}#why-us"`);
-    adjusted = adjusted.replace(/href="#faq"/g, `href="${prefix}#faq"`);
-    adjusted = adjusted.replace(/href="#contact"/g, `href="${prefix}#contact"`);
+    adjusted = adjusted.replace(/href="#home"/g, `href="${prefix}ar/"`);
+    adjusted = adjusted.replace(/href="#services"/g, `href="${prefix}ar/#services"`);
+    adjusted = adjusted.replace(/href="#why-us"/g, `href="${prefix}ar/#why-us"`);
+    adjusted = adjusted.replace(/href="#faq"/g, `href="${prefix}ar/#faq"`);
+    adjusted = adjusted.replace(/href="#contact"/g, `href="${prefix}ar/#contact"`);
   }
 
   return adjusted;
@@ -150,7 +156,11 @@ function adjustPaths(html, depth, isEn) {
 
 // Assemble final page
 function buildPage(pageData, isEn) {
-  const depth = pageData.depth;
+  const depth = pageData.depth + 1; // +1 to account for ar/ or en/ folder
+  let prefix = '';
+  for (let i = 0; i < depth; i++) {
+    prefix += '../';
+  }
   const layout = isEn ? enLayout : arLayout;
   
   let head = layout.headContent;
@@ -179,8 +189,8 @@ function buildPage(pageData, isEn) {
   const cleanedKeywords = cleanEmojis(isEn ? pageData.keywordsEn : pageData.keywordsAr);
 
   // Define new head SEO elements
-  const canonicalUrl = `https://darbalmaha.com/${isEn ? 'en/' : ''}${pageData.urlPath}`;
-  const arUrl = `https://darbalmaha.com/${pageData.urlPath}`;
+  const canonicalUrl = `https://darbalmaha.com/${isEn ? 'en/' : 'ar/'}${pageData.urlPath}`;
+  const arUrl = `https://darbalmaha.com/ar/${pageData.urlPath}`;
   const enUrl = `https://darbalmaha.com/en/${pageData.urlPath}`;
 
   const headSEO = `
@@ -210,7 +220,7 @@ function buildPage(pageData, isEn) {
       "provider": {
         "@type": "HomeAndConstructionBusiness",
         "name": isEn ? "DarbAlmaha Hospitality & Cleaning" : "درب المها للضيافة والتنظيف",
-        "url": isEn ? "https://darbalmaha.com/en/" : "https://darbalmaha.com/"
+        "url": isEn ? "https://darbalmaha.com/en/" : "https://darbalmaha.com/ar/"
       },
       "areaServed": {
         "@type": "Country",
@@ -254,9 +264,7 @@ function buildPage(pageData, isEn) {
   head += `\n    <script type="application/ld+json">\n    ${JSON.stringify(schemaJSON, null, 2)}\n    </script>`;
 
   // Adjust language toggle in header
-  const arDest = `../${pageData.urlPath}`;
-  const enDest = `${depth === 1 ? 'en/' : depth === 2 ? '../en/' : '../../en/'}${pageData.urlPath}`;
-  const toggleDest = isEn ? arDest : enDest;
+  const toggleDest = isEn ? `${prefix}ar/${pageData.urlPath}` : `${prefix}en/${pageData.urlPath}`;
   const toggleLabel = isEn ? 'عربي' : 'English';
   
   if (isEn) {
@@ -266,9 +274,9 @@ function buildPage(pageData, isEn) {
       `<button id="langToggle" style="display:none;"></button><a href="${toggleDest}" class="lang-switch" style="margin-right: 15px;">عربي</a><button class="mobile-menu-btn" aria-label="Toggle Menu">`
     );
   } else {
-    // Replace langToggle in Arabic page header actions
+    // Replace langToggle in Arabic page header actions, matching both button and toggle link
     header = header.replace(
-      /<button\s+id="langToggle"[^>]*>.*?<\/button>/gi,
+      /<button\s+id="langToggle"[^>]*>.*?<\/button>\s*<a\s+href="[^"]*"\s+class="lang-switch">.*?<\/a>/gi,
       `<button id="langToggle" style="display:none;"></button><a href="${toggleDest}" class="lang-switch">${toggleLabel}</a>`
     );
   }
@@ -329,8 +337,8 @@ ${footer}
     </noscript>
 
     <!-- Scripts -->
-    <script src="${depth === 1 ? '../' : depth === 2 ? '../../' : '../../../'}js/landing.min.js" defer></script>
-    <script src="${depth === 1 ? '../' : depth === 2 ? '../../' : '../../../'}js/tracking.min.js" defer></script>
+    <script src="${prefix}js/landing.min.js" defer></script>
+    <script src="${prefix}js/tracking.min.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('year').textContent = new Date().getFullYear();
@@ -2263,7 +2271,7 @@ const pagesData = [
 pagesData.forEach(page => {
   const isEn = false;
   const targetHtml = buildPage(page, isEn);
-  const targetDir = path.join(baseDir, page.urlPath);
+  const targetDir = path.join(baseDir, 'ar', page.urlPath);
   
   if (!fs.existsSync(targetDir)) {
     fs.mkdirSync(targetDir, { recursive: true });

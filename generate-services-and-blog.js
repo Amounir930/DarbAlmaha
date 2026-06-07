@@ -125,31 +125,43 @@ function adjustPaths(html, depth, isEn) {
   adjusted = adjusted.replace(/src="..\/js\//g, `src="${prefix}js/`);
   adjusted = adjusted.replace(/src="..\/..\/js\//g, `src="${prefix}js/`);
 
-  // Adjust policy links
-  if (isEn) {
-    adjusted = adjusted.replace(/href="privacy-policy\.html"/g, `href="${prefix}en/privacy-policy.html"`);
-    adjusted = adjusted.replace(/href="terms\.html"/g, `href="${prefix}en/terms.html"`);
-    adjusted = adjusted.replace(/href="refund-policy\.html"/g, `href="${prefix}en/refund-policy.html"`);
-  } else {
-    adjusted = adjusted.replace(/href="privacy-policy\.html"/g, `href="${prefix}ar/privacy-policy.html"`);
-    adjusted = adjusted.replace(/href="terms\.html"/g, `href="${prefix}ar/terms.html"`);
-    adjusted = adjusted.replace(/href="refund-policy\.html"/g, `href="${prefix}ar/refund-policy.html"`);
-  }
+  // Adjust policy links (All point to /ar/ policies since they are only in Arabic)
+  adjusted = adjusted.replace(/href="privacy-policy\.html"/g, 'href="/ar/privacy-policy.html"');
+  adjusted = adjusted.replace(/href="terms\.html"/g, 'href="/ar/terms.html"');
+  adjusted = adjusted.replace(/href="refund-policy\.html"/g, 'href="/ar/refund-policy.html"');
+
+  const langPrefix = isEn ? '/en/' : '/ar/';
 
   // Adjust main links in navigation (Services, Booking, Pricing, Blog)
-  if (isEn) {
-    adjusted = adjusted.replace(/href="#home"/g, `href="${prefix}en/"`);
-    adjusted = adjusted.replace(/href="#services"/g, `href="${prefix}en/#services"`);
-    adjusted = adjusted.replace(/href="#why-us"/g, `href="${prefix}en/#why-us"`);
-    adjusted = adjusted.replace(/href="#faq"/g, `href="${prefix}en/#faq"`);
-    adjusted = adjusted.replace(/href="#contact"/g, `href="${prefix}en/#contact"`);
-  } else {
-    adjusted = adjusted.replace(/href="#home"/g, `href="${prefix}ar/"`);
-    adjusted = adjusted.replace(/href="#services"/g, `href="${prefix}ar/#services"`);
-    adjusted = adjusted.replace(/href="#why-us"/g, `href="${prefix}ar/#why-us"`);
-    adjusted = adjusted.replace(/href="#faq"/g, `href="${prefix}ar/#faq"`);
-    adjusted = adjusted.replace(/href="#contact"/g, `href="${prefix}ar/#contact"`);
-  }
+  adjusted = adjusted.replace(/href="#home"/g, `href="${langPrefix}"`);
+  adjusted = adjusted.replace(/href="#services"/g, `href="${langPrefix}services/"`);
+  adjusted = adjusted.replace(/href="#why-us"/g, `href="${langPrefix}#why-us"`);
+  adjusted = adjusted.replace(/href="#faq"/g, `href="${langPrefix}#faq"`);
+  adjusted = adjusted.replace(/href="#contact"/g, `href="${langPrefix}#contact"`);
+
+  // Adjust logo links
+  adjusted = adjusted.replace(/href="#"(\s+class="logo-link")/g, `href="${langPrefix}"$1`);
+  adjusted = adjusted.replace(/(class="logo-link"\s+)href="#"/g, `$1href="${langPrefix}"`);
+
+  // Adjust footer area pills
+  const cities = [
+    { ar: 'الدوحة', en: 'Doha', folder: 'doha' },
+    { ar: 'الوكرة', en: 'Al Wakra', folder: 'al-wakra' },
+    { ar: 'الريان', en: 'Al Rayyan', folder: 'al-rayyan' },
+    { ar: 'الخور', en: 'Al Khor', folder: 'al-khor' },
+    { ar: 'لوسيل', en: 'Lusail', folder: 'lusail' },
+    { ar: 'أم صلال', en: 'Umm Salal', folder: 'umm-salal' },
+    { ar: 'الغرافة', en: 'Al Gharafa', folder: 'al-gharafa' },
+    { ar: 'اللؤلؤة', en: 'The Pearl', folder: 'the-pearl' }
+  ];
+
+  cities.forEach(city => {
+    const regexAr = new RegExp(`href="[^"]*"(\\s+class="area-pill"\\s+data-ar="${city.ar}")`, 'g');
+    adjusted = adjusted.replace(regexAr, `href="${langPrefix}${city.folder}/"$1`);
+    
+    const regexEn = new RegExp(`href="[^"]*"(\\s+class="area-pill"\\s+data-en="${city.en}")`, 'g');
+    adjusted = adjusted.replace(regexEn, `href="${langPrefix}${city.folder}/"$1`);
+  });
 
   return adjusted;
 }

@@ -5,7 +5,35 @@
 # Enable Rewrite Engine
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /
+    # ============================================
+    # SEO REDIRECTS FOR REORGANIZED DIRECTORIES
+    # ============================================
+    # Redirect old root locations to /ar/ locations
+    RewriteRule ^doha/?$ /ar/doha/ [R=301,L]
+    RewriteRule ^al-wakra/?$ /ar/al-wakra/ [R=301,L]
+    RewriteRule ^al-rayyan/?$ /ar/al-rayyan/ [R=301,L]
+    RewriteRule ^al-khor/?$ /ar/al-khor/ [R=301,L]
+    RewriteRule ^lusail/?$ /ar/lusail/ [R=301,L]
+    RewriteRule ^umm-salal/?$ /ar/umm-salal/ [R=301,L]
+    RewriteRule ^al-gharafa/?$ /ar/al-gharafa/ [R=301,L]
+    RewriteRule ^the-pearl/?$ /ar/the-pearl/ [R=301,L]
+
+    # Redirect old root hubs and subpages
+    RewriteRule ^services/?$ /ar/services/ [R=301,L]
+    RewriteRule ^services/(.*)$ /ar/services/$1 [R=301,L]
+    RewriteRule ^booking/?$ /ar/booking/ [R=301,L]
+    RewriteRule ^booking/(.*)$ /ar/booking/$1 [R=301,L]
+    RewriteRule ^pricing/?$ /ar/pricing/ [R=301,L]
+    RewriteRule ^pricing/(.*)$ /ar/pricing/$1 [R=301,L]
+    RewriteRule ^blog/?$ /ar/blog/ [R=301,L]
+    RewriteRule ^blog/(.*)$ /ar/blog/$1 [R=301,L]
+
+    # Redirect old policy files
+    RewriteRule ^privacy-policy\.html$ /ar/privacy-policy.html [R=301,L]
+    RewriteRule ^terms\.html$ /ar/terms.html [R=301,L]
+    RewriteRule ^refund-policy\.html$ /ar/refund-policy.html [R=301,L]
+
+    # ============================================
 
     # ============================================
     # FORCE HTTPS (SSL is active via Let's Encrypt)

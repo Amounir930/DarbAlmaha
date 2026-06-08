@@ -125,23 +125,27 @@ function adjustPaths(html, depth, isEn) {
   adjusted = adjusted.replace(/src="..\/js\//g, `src="${prefix}js/`);
   adjusted = adjusted.replace(/src="..\/..\/js\//g, `src="${prefix}js/`);
 
-  // Adjust policy links (All point to /ar/ policies since they are only in Arabic)
-  adjusted = adjusted.replace(/href="privacy-policy\.html"/g, 'href="/ar/privacy-policy.html"');
-  adjusted = adjusted.replace(/href="terms\.html"/g, 'href="/ar/terms.html"');
-  adjusted = adjusted.replace(/href="refund-policy\.html"/g, 'href="/ar/refund-policy.html"');
+  const langPrefix = prefix || './';
+  const pathToRoot = prefix + '../';
+  const otherLangDir = isEn ? 'ar/' : 'en/';
 
-  const langPrefix = isEn ? '/en/' : '/ar/';
+  // Adjust logo links and main links to be relative based on depth
+  const absLangPrefix = isEn ? '/en/' : '/ar/';
+  adjusted = adjusted.replace(new RegExp(`href="${absLangPrefix}"`, 'g'), `href="${langPrefix}"`);
+  adjusted = adjusted.replace(new RegExp(`href="${absLangPrefix}`, 'g'), `href="${prefix}`);
 
-  // Adjust main links in navigation (Services, Booking, Pricing, Blog)
-  adjusted = adjusted.replace(/href="#home"/g, `href="${langPrefix}"`);
-  adjusted = adjusted.replace(/href="#services"/g, `href="${langPrefix}services/"`);
-  adjusted = adjusted.replace(/href="#why-us"/g, `href="${langPrefix}#why-us"`);
-  adjusted = adjusted.replace(/href="#faq"/g, `href="${langPrefix}#faq"`);
-  adjusted = adjusted.replace(/href="#contact"/g, `href="${langPrefix}#contact"`);
+  const otherLangPrefix = isEn ? '/ar/' : '/en/';
+  adjusted = adjusted.replace(new RegExp(`href="${otherLangPrefix}"`, 'g'), `href="${pathToRoot}${otherLangDir}"`);
+  adjusted = adjusted.replace(new RegExp(`href="${otherLangPrefix}`, 'g'), `href="${pathToRoot}${otherLangDir}`);
 
-  // Adjust logo links
-  adjusted = adjusted.replace(/href="#"(\s+class="logo-link")/g, `href="${langPrefix}"$1`);
-  adjusted = adjusted.replace(/(class="logo-link"\s+)href="#"/g, `$1href="${langPrefix}"`);
+  // Adjust policy links (All point to /ar/ policies and should be relative)
+  const pathToArPolicy = isEn ? '../ar/' : (prefix || './');
+  adjusted = adjusted.replace(/href="privacy-policy\.html"/g, `href="${pathToArPolicy}privacy-policy.html"`);
+  adjusted = adjusted.replace(/href="terms\.html"/g, `href="${pathToArPolicy}terms.html"`);
+  adjusted = adjusted.replace(/href="refund-policy\.html"/g, `href="${pathToArPolicy}refund-policy.html"`);
+  adjusted = adjusted.replace(/href="\/ar\/privacy-policy\.html"/g, `href="${pathToArPolicy}privacy-policy.html"`);
+  adjusted = adjusted.replace(/href="\/ar\/terms\.html"/g, `href="${pathToArPolicy}terms.html"`);
+  adjusted = adjusted.replace(/href="\/ar\/refund-policy\.html"/g, `href="${pathToArPolicy}refund-policy.html"`);
 
   // Adjust footer area pills
   const cities = [

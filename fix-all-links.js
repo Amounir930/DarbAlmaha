@@ -18,41 +18,51 @@ function fixHtmlFile(filePath, isEn) {
   content = content.replace(/href="tel:77175355"/g, 'href="https://wa.me/97477175355"');
   content = content.replace(/href="tel:\+97477175355"/g, 'href="https://wa.me/97477175355"');
 
-  // 3. Update navbar and logo links (make them root-relative)
-  const langPrefix = isEn ? '/en/' : '/ar/';
+  // 3. Compute depth and relative prefix
+  const relativeToLang = path.relative(isEn ? enDir : arDir, path.dirname(filePath));
+  const depth = relativeToLang ? relativeToLang.split(path.sep).length : 0;
+  let prefix = '';
+  for (let i = 0; i < depth; i++) {
+    prefix += '../';
+  }
+
+  const langPrefix = prefix || './';
+  const pathToRoot = prefix + '../';
+  const otherLangDir = isEn ? 'ar/' : 'en/';
 
   // Replace navbar links pointing to anchors
   content = content.replace(/href="#home"/g, `href="${langPrefix}"`);
-  content = content.replace(/href="#services"/g, `href="${langPrefix}services/"`);
-  content = content.replace(/href="#why-us"/g, `href="${langPrefix}#why-us"`);
-  content = content.replace(/href="#faq"/g, `href="${langPrefix}#faq"`);
-  content = content.replace(/href="#contact"/g, `href="${langPrefix}booking/"`);
-
-  // Also replace any old relative or wrong links in header:
-  content = content.replace(/href="\.\.\/\.\.\/ar\/"/g, 'href="/ar/"');
-  content = content.replace(/href="\.\.\/\.\.\/en\/"/g, 'href="/en/"');
-  content = content.replace(/href="\.\.\/ar\/"/g, 'href="/ar/"');
-  content = content.replace(/href="\.\.\/en\/"/g, 'href="/en/"');
+  content = content.replace(/href="#services"/g, `href="${prefix}services/"`);
+  content = content.replace(/href="#why-us"/g, `href="${prefix}#why-us"`);
+  content = content.replace(/href="#faq"/g, `href="${prefix}#faq"`);
+  content = content.replace(/href="#contact"/g, `href="${prefix}booking/"`);
 
   // Replace logo link href="#"
   content = content.replace(/href="#"(\s+class="logo-link")/g, `href="${langPrefix}"$1`);
   content = content.replace(/(class="logo-link"\s+)href="#"/g, `$1href="${langPrefix}"`);
 
+  // Convert absolute links to current language to relative
+  const absLangPrefix = isEn ? '/en/' : '/ar/';
+  content = content.replace(new RegExp(`href="${absLangPrefix}"`, 'g'), `href="${langPrefix}"`);
+  content = content.replace(new RegExp(`href="${absLangPrefix}`, 'g'), `href="${prefix}`);
+
+  // Convert absolute links to other language to relative
+  const otherLangPrefix = isEn ? '/ar/' : '/en/';
+  content = content.replace(new RegExp(`href="${otherLangPrefix}"`, 'g'), `href="${pathToRoot}${otherLangDir}"`);
+  content = content.replace(new RegExp(`href="${otherLangPrefix}`, 'g'), `href="${pathToRoot}${otherLangDir}`);
+
   // 4. Update policy page back buttons and links
   content = content.replace(/href="\/"(\s+class="back-btn")/g, `href="${langPrefix}"$1`);
   
-  // Replace old relative policy paths in index or other files
-  content = content.replace(/href="privacy-policy\.html"/g, 'href="/ar/privacy-policy.html"');
-  content = content.replace(/href="terms\.html"/g, 'href="/ar/terms.html"');
-  content = content.replace(/href="refund-policy\.html"/g, 'href="/ar/refund-policy.html"');
+  // Replace policy paths to be relative as well
+  const pathToArPolicy = isEn ? '../ar/' : (prefix || './');
+  content = content.replace(/href="privacy-policy\.html"/g, `href="${pathToArPolicy}privacy-policy.html"`);
+  content = content.replace(/href="terms\.html"/g, `href="${pathToArPolicy}terms.html"`);
+  content = content.replace(/href="refund-policy\.html"/g, `href="${pathToArPolicy}refund-policy.html"`);
   
-  content = content.replace(/href="\.\.\/privacy-policy\.html"/g, 'href="/ar/privacy-policy.html"');
-  content = content.replace(/href="\.\.\/terms\.html"/g, 'href="/ar/terms.html"');
-  content = content.replace(/href="\.\.\/refund-policy\.html"/g, 'href="/ar/refund-policy.html"');
-
-  content = content.replace(/href="\.\.\/\.\.\/privacy-policy\.html"/g, 'href="/ar/privacy-policy.html"');
-  content = content.replace(/href="\.\.\/\.\.\/terms\.html"/g, 'href="/ar/terms.html"');
-  content = content.replace(/href="\.\.\/\.\.\/refund-policy\.html"/g, 'href="/ar/refund-policy.html"');
+  content = content.replace(/href="[^"]*privacy-policy\.html"/g, `href="${pathToArPolicy}privacy-policy.html"`);
+  content = content.replace(/href="[^"]*terms\.html"/g, `href="${pathToArPolicy}terms.html"`);
+  content = content.replace(/href="[^"]*refund-policy\.html"/g, `href="${pathToArPolicy}refund-policy.html"`);
 
   // 5. Update footer area pills links to point to their dedicated pages (if they exist)
   const cities = [

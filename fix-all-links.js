@@ -37,6 +37,16 @@ function fixHtmlFile(filePath, isEn) {
   content = content.replace(/href="#faq"/g, `href="${prefix}#faq"`);
   content = content.replace(/href="#contact"/g, `href="${prefix}booking/"`);
 
+  if (depth > 0) {
+    content = content.replace(/href="\.\/"/g, `href="${langPrefix}"`);
+    content = content.replace(/href="services\/"/g, `href="${langPrefix}services/"`);
+    content = content.replace(/href="pricing\/"/g, `href="${langPrefix}pricing/"`);
+    content = content.replace(/href="blog\/"/g, `href="${langPrefix}blog/"`);
+    content = content.replace(/href="booking\/"/g, `href="${langPrefix}booking/"`);
+    content = content.replace(/href="#why-us"/g, `href="${langPrefix}#why-us"`);
+    content = content.replace(/href="#faq"/g, `href="${langPrefix}#faq"`);
+  }
+
   // Replace logo link href="#"
   content = content.replace(/href="#"(\s+class="logo-link")/g, `href="${langPrefix}"$1`);
   content = content.replace(/(class="logo-link"\s+)href="#"/g, `$1href="${langPrefix}"`);

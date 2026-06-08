@@ -128,15 +128,25 @@ function adjustPaths(html, depth, isEn) {
   const langPrefix = prefix || './';
   const pathToRoot = prefix + '../';
   const otherLangDir = isEn ? 'ar/' : 'en/';
+  const relLangRoot = prefix.slice(3) || './';
 
   // Adjust logo links and main links to be relative based on depth
   const absLangPrefix = isEn ? '/en/' : '/ar/';
-  adjusted = adjusted.replace(new RegExp(`href="${absLangPrefix}"`, 'g'), `href="${langPrefix}"`);
-  adjusted = adjusted.replace(new RegExp(`href="${absLangPrefix}`, 'g'), `href="${prefix}`);
+  adjusted = adjusted.replace(new RegExp(`href="${absLangPrefix}"`, 'g'), `href="${relLangRoot}"`);
+  adjusted = adjusted.replace(new RegExp(`href="${absLangPrefix}`, 'g'), `href="${relLangRoot}`);
 
   const otherLangPrefix = isEn ? '/ar/' : '/en/';
   adjusted = adjusted.replace(new RegExp(`href="${otherLangPrefix}"`, 'g'), `href="${pathToRoot}${otherLangDir}"`);
   adjusted = adjusted.replace(new RegExp(`href="${otherLangPrefix}`, 'g'), `href="${pathToRoot}${otherLangDir}`);
+
+  // Adjust navigation and main section anchor links to be relative to language root
+  adjusted = adjusted.replace(/href="\.\/"/g, `href="${relLangRoot}"`);
+  adjusted = adjusted.replace(/href="services\/"/g, `href="${relLangRoot}services/"`);
+  adjusted = adjusted.replace(/href="pricing\/"/g, `href="${relLangRoot}pricing/"`);
+  adjusted = adjusted.replace(/href="blog\/"/g, `href="${relLangRoot}blog/"`);
+  adjusted = adjusted.replace(/href="booking\/"/g, `href="${relLangRoot}booking/"`);
+  adjusted = adjusted.replace(/href="#why-us"/g, `href="${relLangRoot}#why-us"`);
+  adjusted = adjusted.replace(/href="#faq"/g, `href="${relLangRoot}#faq"`);
 
   // Adjust policy links (All point to /ar/ policies and should be relative)
   const pathToArPolicy = isEn ? '../ar/' : (prefix || './');
@@ -283,19 +293,10 @@ function buildPage(pageData, isEn) {
   const toggleDest = isEn ? `${prefix}ar/${pageData.urlPath}` : `${prefix}en/${pageData.urlPath}`;
   const toggleLabel = isEn ? 'عربي' : 'English';
   
-  if (isEn) {
-    // Inject langToggle switch in English page since it wasn't originally in enLayout
-    header = header.replace(
-      /<button class="mobile-menu-btn" aria-label="Toggle Menu">/gi,
-      `<button id="langToggle" style="display:none;"></button><a href="${toggleDest}" class="lang-switch" style="margin-right: 15px;">عربي</a><button class="mobile-menu-btn" aria-label="Toggle Menu">`
-    );
-  } else {
-    // Replace langToggle in Arabic page header actions, matching both button and toggle link
-    header = header.replace(
-      /<button\s+id="langToggle"[^>]*>.*?<\/button>\s*<a\s+href="[^"]*"\s+class="lang-switch">.*?<\/a>/gi,
-      `<button id="langToggle" style="display:none;"></button><a href="${toggleDest}" class="lang-switch">${toggleLabel}</a>`
-    );
-  }
+  header = header.replace(
+    /<button\s+id="langToggle"[^>]*>.*?<\/button>\s*<a\s+href="[^"]*"\s+class="lang-switch"[^>]*>.*?<\/a>/gi,
+    `<button id="langToggle" style="display:none;"></button><a href="${toggleDest}" class="lang-switch"${isEn ? ' style="margin-right: 15px;"' : ''}>${toggleLabel}</a>`
+  );
 
   // Ensure footer contact number click goes to WhatsApp
   footer = forceWhatsApp(footer);

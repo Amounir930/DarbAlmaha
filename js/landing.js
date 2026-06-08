@@ -6,31 +6,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const langBtn = document.getElementById('langToggle');
     const htmlTag = document.documentElement;
 
-    langBtn.addEventListener('click', () => {
-        const currentLang = htmlTag.getAttribute('lang');
-        const newLang = currentLang === 'ar' ? 'en' : 'ar';
-        const newDir = newLang === 'ar' ? 'rtl' : 'ltr';
+    if (langBtn) {
+        langBtn.addEventListener('click', () => {
+            const currentLang = htmlTag.getAttribute('lang');
+            const newLang = currentLang === 'ar' ? 'en' : 'ar';
+            const newDir = newLang === 'ar' ? 'rtl' : 'ltr';
 
-        // Update HTML attributes
-        htmlTag.setAttribute('lang', newLang);
-        htmlTag.setAttribute('dir', newDir);
+            // Update HTML attributes
+            htmlTag.setAttribute('lang', newLang);
+            htmlTag.setAttribute('dir', newDir);
 
-        // Update button text
-        langBtn.textContent = newLang === 'ar' ? 'English' : 'عربي';
+            // Update button text
+            langBtn.textContent = newLang === 'ar' ? 'English' : 'عربي';
 
-        // Update all translation elements
-        document.querySelectorAll('[data-ar]').forEach(el => {
-            el.textContent = el.getAttribute(`data-${newLang}`);
+            // Update all translation elements
+            document.querySelectorAll('[data-ar]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${newLang}`);
+            });
+
+            // Save preference
+            localStorage.setItem('preferredLang', newLang);
         });
 
-        // Save preference
-        localStorage.setItem('preferredLang', newLang);
-    });
-
-    // Load saved language preference if any
-    const savedLang = localStorage.getItem('preferredLang');
-    if (savedLang && savedLang !== htmlTag.getAttribute('lang')) {
-        langBtn.click(); // Trigger change
+        // Load saved language preference if any
+        const savedLang = localStorage.getItem('preferredLang');
+        if (savedLang && savedLang !== htmlTag.getAttribute('lang')) {
+            langBtn.click(); // Trigger change
+        }
     }
 
     // --- 2. Mobile Menu Toggle ---
